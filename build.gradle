@@ -1,0 +1,35 @@
+plugins {
+    id 'groovy'
+    id 'maven-publish'
+    id 'java-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'net.researchgate:gradle-release:2.8.0'
+    compile 'org.jfrog.buildinfo:build-info-extractor-gradle:4.9.5'
+}
+
+gradlePlugin {
+    plugins {
+        greetingsPlugin {
+            id = 'com.github.miksher.plugin-test'
+            implementationClass = 'com.github.miksher.PluginPublisher'
+        }
+    }
+}
+
+publishing {
+    publications {
+        pluginPublication (MavenPublication) {
+            from components.java
+            groupId project.group
+            artifactId "plugin-test"
+            version project.version
+        }
+    }
+}
